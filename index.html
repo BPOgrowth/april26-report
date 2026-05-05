@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuyParts.Online — April 2026 Performance Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --red: #E31C24;
+    --navy: #0D1B2A;
+    --navy-mid: #1A2C3E;
+    --navy-light: #243447;
+    --gold: #F4C430;
+    --green: #00C48C;
+    --orange: #FF7A35;
+    --text: #E8EDF2;
+    --text-muted: #8A9BB0;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(26,44,62,0.7);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* HEADER */
+  .report-header {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1A2C3E 60%, #0D1B2A 100%);
+    border-bottom: 3px solid var(--red);
+    padding: 3rem 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(227,28,36,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .header-title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+  }
+  .header-sub {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .header-meta {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .header-meta span strong { color: var(--text); }
+
+  /* LAYOUT */
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+  .section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  /* KPI GRID */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin: 2rem 0; }
+  .kpi-card {
+    background: var(--card);
+    padding: 1.5rem;
+    position: relative;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+  }
+  .kpi-card.positive::before { background: var(--green); }
+  .kpi-card.warning::before { background: var(--orange); }
+  .kpi-card.danger::before { background: var(--red); }
+  .kpi-card.neutral::before { background: var(--text-muted); }
+  .kpi-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.orange { color: var(--orange); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.gold { color: var(--gold); }
+  .kpi-meta { font-size: 11px; color: var(--text-muted); }
+
+  /* CHANNEL TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 13px; }
+  .data-table thead tr { border-bottom: 2px solid var(--red); }
+  .data-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 400;
+  }
+  .data-table th.right { text-align: right; }
+  .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+  .data-table td.right { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+  .data-table tr:hover { background: rgba(255,255,255,0.03); }
+  .data-table tr.highlight { background: rgba(227,28,36,0.06); }
+  .data-table tr.highlight-green { background: rgba(0,196,140,0.06); }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .badge-green { background: rgba(0,196,140,0.15); color: var(--green); }
+  .badge-orange { background: rgba(255,122,53,0.15); color: var(--orange); }
+  .badge-red { background: rgba(227,28,36,0.15); color: var(--red); }
+  .badge-gold { background: rgba(244,196,48,0.15); color: var(--gold); }
+  .badge-blue { background: rgba(100,160,255,0.15); color: #64A0FF; }
+
+  /* INSIGHT BOXES */
+  .insight-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  .insight-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    padding: 1.25rem 1.5rem;
+  }
+  .insight-box.critical { border-left-color: var(--red); }
+  .insight-box.opportunity { border-left-color: var(--green); }
+  .insight-box.info { border-left-color: #64A0FF; }
+  .insight-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .insight-box.critical .insight-label { color: var(--red); }
+  .insight-box.opportunity .insight-label { color: var(--green); }
+  .insight-box.info .insight-label { color: #64A0FF; }
+  .insight-box .insight-label { color: var(--orange); }
+  .insight-box p { color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+  .insight-box strong { color: var(--text); }
+
+  /* BAR CHART */
+  .bar-row { display: flex; align-items: center; gap: 1rem; margin: 0.6rem 0; }
+  .bar-label { min-width: 160px; font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; height: 24px; background: var(--navy-light); border-radius: 2px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--navy); font-weight: 700; border-radius: 2px; white-space: nowrap; transition: width 0.8s ease; }
+  .bar-fill.green { background: var(--green); }
+  .bar-fill.orange { background: var(--orange); }
+  .bar-fill.red { background: var(--red); }
+  .bar-fill.gold { background: var(--gold); }
+  .bar-fill.blue { background: #64A0FF; }
+  .bar-fill.muted { background: var(--text-muted); }
+  .bar-extra { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--text-muted); min-width: 80px; text-align: right; }
+
+  /* ACTION ITEMS */
+  .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  .action-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+  .action-priority {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .action-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .action-items { list-style: none; }
+  .action-items li {
+    padding: 0.35rem 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.5rem;
+  }
+  .action-items li:last-child { border-bottom: none; }
+  .action-items li::before { content: '→'; color: var(--red); flex-shrink: 0; }
+  .action-upside { margin-top: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--green); }
+
+  /* ALERT BANNER */
+  .alert {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 2px;
+  }
+  .alert.critical { background: rgba(227,28,36,0.1); border: 1px solid rgba(227,28,36,0.3); }
+  .alert.warning { background: rgba(255,122,53,0.1); border: 1px solid rgba(255,122,53,0.3); }
+  .alert.success { background: rgba(0,196,140,0.1); border: 1px solid rgba(0,196,140,0.3); }
+  .alert-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .alert-text { font-size: 13px; color: var(--text-muted); }
+  .alert-text strong { color: var(--text); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  /* MONO VALUE */
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+
+  /* FOOTER */
+  .report-footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .tag-pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 2px;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="header-label">Performance Analysis</div>
+  <div class="header-title">BuyParts.Online — April 2026</div>
+  <div class="header-sub">Multichannel report: Google Search Console · Google Ads · Shopify · Ubersuggest</div>
+  <div class="header-meta">
+    <span></strong> María De la Cruz, Growth & SEO Manager</span>
+    <span><strong>Period:</strong> Apr 1 – Apr 30, 2026</span>
+    <span><strong>Reports analyzed:</strong> 36</span>
+  </div>
+</div>
+
+<div style="background: rgba(227,28,36,0.08); border-bottom: 1px solid rgba(227,28,36,0.2); padding: 0.75rem 4rem; font-size: 12px; color: var(--text-muted);">
+  <strong style="color: var(--red);">⚠ ATTRIBUTION GAP DETECTED:</strong> Google Ads reports $2.46M conversion value vs Shopify's $329K paid attribution — 7.5x discrepancy. All revenue figures in this report use <strong>Shopify last-click attribution</strong> as source of truth.
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: EXECUTIVE SUMMARY -->
+  <div class="section">
+    <div class="section-label">01</div>
+    <div class="section-title">Executive Summary — April 2026</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card positive">
+        <div class="kpi-label">Total Revenue (All Channels)</div>
+        <div class="kpi-value green">$1.01M</div>
+        <div class="kpi-meta">3,500 orders · 209K sessions</div>
+      </div>
+      <div class="kpi-card positive">
+        <div class="kpi-label">Google Organic Revenue</div>
+        <div class="kpi-value green">$375.7K</div>
+        <div class="kpi-meta">59,732 sessions · 1,127 orders</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Google Ads Spend</div>
+        <div class="kpi-value orange">$69.8K</div>
+        <div class="kpi-meta">Device breakdown total · $329K Shopify revenue</div>
+      </div>
+      <div class="kpi-card neutral">
+        <div class="kpi-label">Blended Conv Rate</div>
+        <div class="kpi-value">1.67%</div>
+        <div class="kpi-meta">All channels combined</div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card positive">
+        <div class="kpi-label">GSC Organic Clicks</div>
+        <div class="kpi-value green">66.4K</div>
+        <div class="kpi-meta">Desktop 47K · Mobile 18.8K · Tablet 393</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Paid AOV vs Organic AOV</div>
+        <div class="kpi-value orange">$237 vs $333</div>
+        <div class="kpi-meta">Paid buyers buy 29% less per order</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">AI Search Visibility</div>
+        <div class="kpi-value red">0 / 15</div>
+        <div class="kpi-meta">Zero presence in all AI prompts tested</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Internal Linking Gap</div>
+        <div class="kpi-value red">95.7%</div>
+        <div class="kpi-meta">Products with fewer than 5 internal links</div>
+      </div>
+    </div>
+
+    <div class="alert critical">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text"><strong>Critical finding:</strong> BuyParts.Online appears in <strong>zero of 15 AI search prompts</strong> tested by Ubersuggest, while ChatGPT already sends 709 sessions/month converting at <strong>6.5–8.2%</strong> — the highest conversion rate of any channel. This is the single biggest untapped opportunity in this report.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CHANNEL PERFORMANCE -->
+  <div class="section">
+    <div class="section-label">02</div>
+    <div class="section-title">Channel Performance — Shopify Attribution</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Type</th>
+          <th class="right">Sessions</th>
+          <th class="right">Revenue</th>
+          <th class="right">Orders</th>
+          <th class="right">Conv Rate</th>
+          <th class="right">AOV</th>
+          <th class="right">New Cust</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-green">
+          <td><strong>Google Search</strong></td>
+          <td><span class="badge badge-blue">organic</span></td>
+          <td class="right mono">59,732</td>
+          <td class="right mono">$375,733</td>
+          <td class="right mono">1,127</td>
+          <td class="right mono">1.89%</td>
+          <td class="right mono">$333</td>
+          <td class="right mono">737</td>
+          <td><span class="badge badge-green">CORE CHANNEL</span></td>
+        </tr>
+        <tr>
+          <td><strong>Google Ads</strong></td>
+          <td><span class="badge badge-orange">paid</span></td>
+          <td class="right mono">58,513</td>
+          <td class="right mono">$329,552</td>
+          <td class="right mono">1,391</td>
+          <td class="right mono">2.38%</td>
+          <td class="right mono">$237</td>
+          <td class="right mono">1,087</td>
+          <td><span class="badge badge-orange">AOV GAP ⚠</span></td>
+        </tr>
+        <tr>
+          <td><strong>Direct</strong></td>
+          <td><span class="badge badge-blue">direct</span></td>
+          <td class="right mono">48,383</td>
+          <td class="right mono">$94,613</td>
+          <td class="right mono">318</td>
+          <td class="right mono">0.66%</td>
+          <td class="right mono">$298</td>
+          <td class="right mono">179</td>
+          <td><span class="badge badge-orange">LOW CONV</span></td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Google (unknown)</strong></td>
+          <td><span class="badge badge-red">unknown</span></td>
+          <td class="right mono">4,786</td>
+          <td class="right mono">$84,491</td>
+          <td class="right mono">336</td>
+          <td class="right mono">7.02%</td>
+          <td class="right mono">$251</td>
+          <td class="right mono">257</td>
+          <td><span class="badge badge-red">INVESTIGATE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bing Organic</strong></td>
+          <td><span class="badge badge-blue">organic</span></td>
+          <td class="right mono">5,953</td>
+          <td class="right mono">$28,675</td>
+          <td class="right mono">63</td>
+          <td class="right mono">1.06%</td>
+          <td class="right mono">$455</td>
+          <td class="right mono">43</td>
+          <td><span class="badge badge-gold">HIGH AOV</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bing (unknown)</strong></td>
+          <td><span class="badge badge-red">unknown</span></td>
+          <td class="right mono">2,100</td>
+          <td class="right mono">$23,639</td>
+          <td class="right mono">41</td>
+          <td class="right mono">1.95%</td>
+          <td class="right mono">$577</td>
+          <td class="right mono">28</td>
+          <td><span class="badge badge-gold">HIGHEST AOV</span></td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Google (unattributed paid)</strong></td>
+          <td><span class="badge badge-red">unknown</span></td>
+          <td class="right mono">571</td>
+          <td class="right mono">$17,617</td>
+          <td class="right mono">46</td>
+          <td class="right mono">8.06%</td>
+          <td class="right mono">$383</td>
+          <td class="right mono">30</td>
+          <td><span class="badge badge-red">INVESTIGATE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Yahoo Organic</strong></td>
+          <td><span class="badge badge-blue">organic</span></td>
+          <td class="right mono">417</td>
+          <td class="right mono">$8,478</td>
+          <td class="right mono">20</td>
+          <td class="right mono">4.80%</td>
+          <td class="right mono">$424</td>
+          <td class="right mono">15</td>
+          <td><span class="badge badge-green">EFFICIENT</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td><strong>ChatGPT.com</strong></td>
+          <td><span class="badge badge-red">unknown</span></td>
+          <td class="right mono">538</td>
+          <td class="right mono">$6,832</td>
+          <td class="right mono">35</td>
+          <td class="right mono">6.51%</td>
+          <td class="right mono">$195</td>
+          <td class="right mono">30</td>
+          <td><span class="badge badge-green">🔥 AEO OPP</span></td>
+        </tr>
+        <tr>
+          <td><strong>DuckDuckGo</strong></td>
+          <td><span class="badge badge-blue">organic</span></td>
+          <td class="right mono">321</td>
+          <td class="right mono">$6,764</td>
+          <td class="right mono">13</td>
+          <td class="right mono">4.05%</td>
+          <td class="right mono">$520</td>
+          <td class="right mono">11</td>
+          <td><span class="badge badge-green">HIGH CONV</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td><strong>Shopify Email</strong></td>
+          <td><span class="badge badge-orange">paid</span></td>
+          <td class="right mono">163</td>
+          <td class="right mono">$6,380</td>
+          <td class="right mono">23</td>
+          <td class="right mono">14.11%</td>
+          <td class="right mono">$277</td>
+          <td class="right mono">11</td>
+          <td><span class="badge badge-green">BEST CONV RATE</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td><strong>ChatGPT (app)</strong></td>
+          <td><span class="badge badge-red">unknown</span></td>
+          <td class="right mono">171</td>
+          <td class="right mono">$2,474</td>
+          <td class="right mono">14</td>
+          <td class="right mono">8.19%</td>
+          <td class="right mono">$177</td>
+          <td class="right mono">13</td>
+          <td><span class="badge badge-green">🔥 AEO OPP</span></td>
+        </tr>
+        <tr>
+          <td><strong>Facebook Paid</strong></td>
+          <td><span class="badge badge-orange">paid</span></td>
+          <td class="right mono">1,129</td>
+          <td class="right mono">$2,977</td>
+          <td class="right mono">14</td>
+          <td class="right mono">1.24%</td>
+          <td class="right mono">$213</td>
+          <td class="right mono">7</td>
+          <td><span class="badge badge-orange">WEAK ROI</span></td>
+        </tr>
+        <tr>
+          <td><strong>Instagram Paid</strong></td>
+          <td><span class="badge badge-red">paid</span></td>
+          <td class="right mono">3,986</td>
+          <td class="right mono">$540</td>
+          <td class="right mono">2</td>
+          <td class="right mono">0.05%</td>
+          <td class="right mono">$270</td>
+          <td class="right mono">1</td>
+          <td><span class="badge badge-red">WASTE ⛔</span></td>
+        </tr>
+        <tr>
+          <td><strong>Facebook Organic</strong></td>
+          <td><span class="badge badge-blue">organic</span></td>
+          <td class="right mono">15,673</td>
+          <td class="right mono">$1,550</td>
+          <td class="right mono">1</td>
+          <td class="right mono">0.006%</td>
+          <td class="right mono">$1,550</td>
+          <td class="right mono">1</td>
+          <td><span class="badge badge-red">WASTE ⛔</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-grid">
+      <div class="insight-box critical">
+        <div class="insight-label">⚠ Attribution Gap — Investigate</div>
+        <p><strong>Google "unknown" (7.02% conv)</strong> and <strong>"unattributed paid" (8.06% conv)</strong> together drove $102K in revenue with extremely high conversion rates. These are likely mis-tagged UTMs or direct referrals from Shopping campaigns not properly attributed. Audit UTM parameters immediately.</p>
+      </div>
+      <div class="insight-box critical">
+        <div class="insight-label">⚠ AOV Paid vs Organic Gap</div>
+        <p>Google Paid AOV is <strong>$237 vs Organic $333</strong> — a <strong>$96 per-order gap</strong>. Paid campaigns are attracting lower-value buyers, or Shopping campaigns (which dominate paid) bias toward cheaper items. Review campaign structure and product-price targeting.</p>
+      </div>
+      <div class="insight-box opportunity">
+        <div class="insight-label">🔥 ChatGPT = Highest-Intent Traffic</div>
+        <p>ChatGPT sends <strong>709 combined sessions</strong> converting at <strong>6.5–8.2%</strong> — 3.4–4.3x better than Google organic (1.89%). Revenue: <strong>$9,306/month</strong> with zero investment. BuyParts has <strong>0% AI visibility</strong>. Scaling this is the highest-ROI opportunity in the report.</p>
+      </div>
+      <div class="insight-box opportunity">
+        <div class="insight-label">✅ Email = 14.11% Conv Rate</div>
+        <p>Shopify Email drives a <strong>14.11% conversion rate</strong> from just 163 sessions — the highest of any paid channel. Only 23 orders in April. This channel is massively underutilized. Every email campaign beats every paid ad in conversion efficiency.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: GOOGLE ADS -->
+  <div class="section">
+    <div class="section-label">03</div>
+    <div class="section-title">Google Ads — Campaign Analysis</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card warning">
+        <div class="kpi-label">Total Ad Spend (Devices)</div>
+        <div class="kpi-value orange">$69.8K</div>
+        <div class="kpi-meta">Computers + Mobile + Tablet + TV</div>
+      </div>
+      <div class="kpi-card positive">
+        <div class="kpi-label">Shopify Attributed Revenue</div>
+        <div class="kpi-value green">$329.6K</div>
+        <div class="kpi-meta">~4.7x ROAS (Shopify attribution)</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Mobile vs Desktop Spend</div>
+        <div class="kpi-value orange">53% / 46%</div>
+        <div class="kpi-meta">Mobile: $37.2K · Desktop: $31.9K</div>
+      </div>
+      <div class="kpi-card neutral">
+        <div class="kpi-label">Mobile Conversions</div>
+        <div class="kpi-value">961 / 1,516</div>
+        <div class="kpi-meta">63.4% of all ad conversions are mobile</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem;">Top Campaigns by Spend (Active Only)</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th>Type</th>
+          <th class="right">Spend</th>
+          <th class="right">Clicks</th>
+          <th class="right">Conversions</th>
+          <th class="right">Conv Value</th>
+          <th class="right">ROAS</th>
+          <th class="right">CPA</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-green">
+          <td>Sales Campaign Aug 2023</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$25,020</td>
+          <td class="right mono">23,743</td>
+          <td class="right mono">571</td>
+          <td class="right mono">$224,178</td>
+          <td class="right mono">8.96x</td>
+          <td class="right mono">$44</td>
+          <td><span class="badge badge-green">SCALE UP</span></td>
+        </tr>
+        <tr>
+          <td>PMAX Freightliner $150+</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$9,168</td>
+          <td class="right mono">7,151</td>
+          <td class="right mono">150</td>
+          <td class="right mono">$76,466</td>
+          <td class="right mono">8.34x</td>
+          <td class="right mono">$61</td>
+          <td><span class="badge badge-green">PERFORMING</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td>PMAX ALL Under $50</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$5,002</td>
+          <td class="right mono">6,913</td>
+          <td class="right mono">217</td>
+          <td class="right mono">$53,295</td>
+          <td class="right mono">10.66x</td>
+          <td class="right mono">$23</td>
+          <td><span class="badge badge-green">TOP ROAS</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td>PMAX Truck OEM $150+</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$4,034</td>
+          <td class="right mono">1,749</td>
+          <td class="right mono">51</td>
+          <td class="right mono">$42,393</td>
+          <td class="right mono">10.51x</td>
+          <td class="right mono">$79</td>
+          <td><span class="badge badge-green">SCALE UP</span></td>
+        </tr>
+        <tr>
+          <td>PMAX Misc $150+</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$3,952</td>
+          <td class="right mono">3,769</td>
+          <td class="right mono">58</td>
+          <td class="right mono">$36,974</td>
+          <td class="right mono">9.35x</td>
+          <td class="right mono">$68</td>
+          <td><span class="badge badge-green">PERFORMING</span></td>
+        </tr>
+        <tr class="highlight">
+          <td>PMAX Kenworth $150+</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$3,339</td>
+          <td class="right mono">2,507</td>
+          <td class="right mono">22</td>
+          <td class="right mono">$19,067</td>
+          <td class="right mono">5.71x</td>
+          <td class="right mono">$154</td>
+          <td><span class="badge badge-orange">UNDERPERFORMING</span></td>
+        </tr>
+        <tr class="highlight">
+          <td>CATCH ALL Bleeders</td>
+          <td><span class="badge badge-blue">Shopping</span></td>
+          <td class="right mono">$2,696</td>
+          <td class="right mono">16,403</td>
+          <td class="right mono">75</td>
+          <td class="right mono">$9,236</td>
+          <td class="right mono">3.43x</td>
+          <td class="right mono">$36</td>
+          <td><span class="badge badge-orange">LOW ROAS</span></td>
+        </tr>
+        <tr class="highlight">
+          <td>Demand Gen Campaign</td>
+          <td><span class="badge badge-red">DemandGen</span></td>
+          <td class="right mono">$2,592</td>
+          <td class="right mono">2,961</td>
+          <td class="right mono">13</td>
+          <td class="right mono">$3,090</td>
+          <td class="right mono">1.19x</td>
+          <td class="right mono">$200</td>
+          <td><span class="badge badge-red">PAUSE ⛔</span></td>
+        </tr>
+        <tr class="highlight-green">
+          <td>AI Search Campaign</td>
+          <td><span class="badge badge-blue">Search</span></td>
+          <td class="right mono">$2,254</td>
+          <td class="right mono">1,612</td>
+          <td class="right mono">50</td>
+          <td class="right mono">$21,646</td>
+          <td class="right mono">9.61x</td>
+          <td class="right mono">$45</td>
+          <td><span class="badge badge-green">SCALE UP</span></td>
+        </tr>
+        <tr>
+          <td>PMAX Freightliner $50-$150</td>
+          <td><span class="badge badge-blue">PMAX</span></td>
+          <td class="right mono">$2,832</td>
+          <td class="right mono">3,026</td>
+          <td class="right mono">87</td>
+          <td class="right mono">$31,696</td>
+          <td class="right mono">11.19x</td>
+          <td class="right mono">$32</td>
+          <td><span class="badge badge-green">TOP ROAS</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-grid">
+      <div class="insight-box critical">
+        <div class="insight-label">⛔ Demand Gen = Burning Money</div>
+        <p>Demand Gen Campaign spent <strong>$2,592</strong> to generate just <strong>$3,090 in conversion value</strong> — 1.19x ROAS. With a target ROAS of 8–10x, this campaign is losing <strong>~$1,400/month</strong>. Pause immediately and reallocate to PMAX Truck OEM ($150+) at 10.51x ROAS.</p>
+      </div>
+      <div class="insight-box critical">
+        <div class="insight-label">⛔ CATCH ALL Bleeders Inefficiency</div>
+        <p>CATCH ALL Bleeders has <strong>16,403 clicks</strong> (most of any campaign) at 3.43x ROAS — well below the account average of ~8x. It's consuming budget on <strong>low-quality products or irrelevant queries</strong>. Reduce budget 50% and add negative keywords.</p>
+      </div>
+      <div class="insight-box opportunity">
+        <div class="insight-label">✅ Mobile = 63% of Conversions</div>
+        <p>Mobile generated <strong>961 of 1,516 total conversions</strong> (63.4%) while spending 53% of budget. Mobile is the more efficient device. Consider increasing mobile bid adjustments <strong>+15–20%</strong> and testing mobile-specific landing pages.</p>
+      </div>
+      <div class="insight-box opportunity">
+        <div class="insight-label">✅ AI Search Campaign at 9.61x ROAS</div>
+        <p>The <strong>AI Search Campaign</strong> is already running and performing at 9.61x ROAS — above average. This validates the AEO/GEO thesis. <strong>Double its budget</strong> from $2,254 to $4,500/month and add AI-specific ad copy variants targeting ChatGPT-style queries.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: ORGANIC SEARCH / GSC -->
+  <div class="section">
+    <div class="section-label">04</div>
+    <div class="section-title">Organic Search — Google Search Console</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card positive">
+        <div class="kpi-label">Total Organic Clicks (April)</div>
+        <div class="kpi-value green">66,394</div>
+        <div class="kpi-meta">Desktop 47.1K · Mobile 18.9K · Tablet 393</div>
+      </div>
+      <div class="kpi-card positive">
+        <div class="kpi-label">Total Impressions</div>
+        <div class="kpi-value green">2.04M</div>
+        <div class="kpi-meta">Avg position 7.2 across all devices</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Avg Organic CTR</div>
+        <div class="kpi-value orange">3.26%</div>
+        <div class="kpi-meta">Desktop 3.1% · Mobile 3.74% · Tablet 3.89%</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Top Country: US</div>
+        <div class="kpi-value orange">74.9%</div>
+        <div class="kpi-meta">49,741 clicks · Canada 8,510 · Mexico 1,940</div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top: 1.5rem;">
+      <div>
+        <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; font-weight: 500; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase; font-size: 10px;">CLICKS BY DEVICE</h3>
+        <div class="bar-row">
+          <div class="bar-label">Desktop</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:71%">47,151 clicks</div></div>
+          <div class="bar-extra">3.10% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Mobile</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:28%">18,850 clicks</div></div>
+          <div class="bar-extra">3.74% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Tablet</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:1%">393</div></div>
+          <div class="bar-extra">3.89% CTR</div>
+        </div>
+
+        <h3 style="font-size: 0.9rem; color: var(--text-muted); margin: 1.5rem 0 1rem; font-weight: 500; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase; font-size: 10px;">TOP COUNTRIES</h3>
+        <div class="bar-row">
+          <div class="bar-label">United States</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:75%">49,741 clicks</div></div>
+          <div class="bar-extra">3.62% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Canada</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:13%">8,510 clicks</div></div>
+          <div class="bar-extra">3.98% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Mexico</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:3%">1,940</div></div>
+          <div class="bar-extra">1.20% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Australia</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:1.2%">757</div></div>
+          <div class="bar-extra">4.01% CTR</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Colombia</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:0.8%">364</div></div>
+          <div class="bar-extra">2.26% CTR</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-weight: 500; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">CRITICAL CTR GAPS (High Impression, Low Click)</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">Pages ranking top 5 with <strong style="color: var(--red);">under 1% CTR</strong>. These are part number pages with generic SERP snippets — no descriptive title, no brand context, no compelling reason to click.</p>
+        <table class="data-table" style="font-size: 11px;">
+          <thead>
+            <tr>
+              <th>Query (Part #)</th>
+              <th class="right">Impr</th>
+              <th class="right">Clicks</th>
+              <th class="right">CTR</th>
+              <th class="right">Pos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td class="mono">tk9971</td>
+              <td class="right mono">1,437</td>
+              <td class="right mono">4</td>
+              <td class="right mono" style="color: var(--red)">0.28%</td>
+              <td class="right mono">3.7</td>
+            </tr>
+            <tr class="highlight">
+              <td class="mono">4181762c3</td>
+              <td class="right mono">1,359</td>
+              <td class="right mono">2</td>
+              <td class="right mono" style="color: var(--red)">0.15%</td>
+              <td class="right mono">2.9</td>
+            </tr>
+            <tr class="highlight">
+              <td class="mono">1797900pe</td>
+              <td class="right mono">1,301</td>
+              <td class="right mono">7</td>
+              <td class="right mono" style="color: var(--red)">0.54%</td>
+              <td class="right mono">2.7</td>
+            </tr>
+            <tr class="highlight">
+              <td class="mono">4070869c2</td>
+              <td class="right mono">1,185</td>
+              <td class="right mono">2</td>
+              <td class="right mono" style="color: var(--red)">0.17%</td>
+              <td class="right mono">8.2</td>
+            </tr>
+            <tr class="highlight">
+              <td class="mono">2512557c92</td>
+              <td class="right mono">1,084</td>
+              <td class="right mono">3</td>
+              <td class="right mono" style="color: var(--red)">0.28%</td>
+              <td class="right mono">5.6</td>
+            </tr>
+            <tr class="highlight">
+              <td class="mono">3163072</td>
+              <td class="right mono">1,003</td>
+              <td class="right mono">2</td>
+              <td class="right mono" style="color: var(--red)">0.20%</td>
+              <td class="right mono">5.7</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert warning" style="margin-top: 1rem;">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-text" style="font-size: 11px;"><strong>Expected CTR at position 3–5:</strong> 10–15%. Actual: 0.15–0.54%. Root cause: SERP snippets show bare part numbers with no brand, description, or fitment context. The pSEO enrichment layer (title optimization + internal linking algorithm) addresses this directly as part of the 50-product test group.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: AEO/GEO + COMPETITOR -->
+  <div class="section">
+    <div class="section-label">05</div>
+    <div class="section-title">AI Engine Visibility (AEO/GEO) + Competitive Gap</div>
+
+    <div class="alert critical">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text"><strong>BuyParts.Online scored 0/15 in AI prompt visibility tests.</strong> Competitors like FindItParts, FleetPride, and NAPA Auto Parts appear consistently. Meanwhile, ChatGPT already sends converting traffic — meaning buyers ARE using AI, BuyParts just isn't being recommended.</div>
+    </div>
+
+    <div class="two-col" style="margin-top: 1.5rem;">
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">AI PROMPTS TESTED (0% Visibility)</h3>
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 2;">
+          <div>▸ "Where can I find reliable truck parts suppliers near me?"</div>
+          <div>▸ "What are the best sources for OEM truck replacement parts?"</div>
+          <div>▸ "Where can I buy affordable aftermarket truck parts online?"</div>
+          <div>▸ "Which companies offer warranty on heavy-duty truck parts?"</div>
+          <div>▸ "Which distributors stock parts for diesel truck engines?"</div>
+          <div>▸ "Where can I get truck brake parts with fast shipping?"</div>
+          <div>▸ "Which vendors specialize in heavy truck suspension parts?"</div>
+          <div>▸ "Which suppliers offer bulk purchasing options for truck parts?"</div>
+          <div>▸ "Where do I find certified truck parts for fleet maintenance?"</div>
+          <div style="color: var(--red); font-style: italic;">+ 6 more prompts — all: Visibility = 0</div>
+        </div>
+        <div class="alert success" style="margin-top: 1rem;">
+          <div class="alert-icon">✅</div>
+          <div class="alert-text" style="font-size: 11px;"><strong>But ChatGPT already converts at 7.5x better than Google organic.</strong> 709 sessions → 49 orders → $9,306 revenue at 6.5–8.2% conv rate. Every AI mention BuyParts earns will compound this.</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">COMPETITOR GAP ANALYSIS (Ubersuggest)</h3>
+        <table class="data-table" style="font-size: 12px;">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th class="right">KW Gap</th>
+              <th class="right">Traffic</th>
+              <th class="right">Backlinks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td><strong>finditparts.com</strong></td>
+              <td class="right mono" style="color: var(--red)">60,192</td>
+              <td class="right mono">63,298</td>
+              <td class="right mono">113,905</td>
+            </tr>
+            <tr>
+              <td>s1partscenter.com</td>
+              <td class="right mono" style="color: var(--orange)">8,362</td>
+              <td class="right mono">9,829</td>
+              <td class="right mono">7,909</td>
+            </tr>
+            <tr>
+              <td>hnctruckparts.com</td>
+              <td class="right mono">971</td>
+              <td class="right mono">376</td>
+              <td class="right mono">12,927</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 1rem;">
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 0.75rem;">BuyParts currently has <strong style="color: var(--text);">500 backlinks</strong> — all high DA (70+). Quality is excellent but volume is tiny vs FindItParts (113,905).</p>
+          <p style="font-size: 12px; color: var(--text-muted);"><strong style="color: var(--gold);">60,192 keyword gap with FindItParts</strong> = the content and pSEO roadmap for the next 12 months. These are keywords with proven search demand that you don't rank for yet.</p>
+        </div>
+
+        <h3 style="font-size: 10px; color: var(--text-muted); margin: 1.5rem 0 0.75rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">AI-VISIBLE BRANDS (Not BuyParts)</h3>
+        <div style="font-size: 12px; line-height: 2; color: var(--text-muted);">
+          <span class="tag-pill">FleetPride (31.67% visibility)</span>
+          <span class="tag-pill">NAPA Auto Parts (20%)</span>
+          <span class="tag-pill">FindItParts (20%)</span>
+          <span class="tag-pill">Custom Truck One Source (16.67%)</span>
+          <span class="tag-pill">TruckPro</span>
+          <span class="tag-pill">LMC Truck</span>
+          <span class="tag-pill">WheelerFleet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TOP PRODUCTS + BRANDS -->
+  <div class="section">
+    <div class="section-label">06</div>
+    <div class="section-title">Product & Brand Performance — Shopify</div>
+
+    <div class="two-col">
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">TOP BRANDS BY REVENUE (April)</h3>
+        <div class="bar-row">
+          <div class="bar-label">Navistar International</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:100%">$127,094</div></div>
+          <div class="bar-extra">1,143 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Cummins</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:60%">$75,814</div></div>
+          <div class="bar-extra">271 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Freightliner</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:50%">$63,032</div></div>
+          <div class="bar-extra">420 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Paccar</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:38%">$48,763</div></div>
+          <div class="bar-extra">353 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Kenworth</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:32%">$40,057</div></div>
+          <div class="bar-extra">177 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Mack Truck</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:28%">$35,514</div></div>
+          <div class="bar-extra">194 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Freightliner W-Star</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:27%">$34,679</div></div>
+          <div class="bar-extra">418 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Volvo Truck</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:17%">$21,327</div></div>
+          <div class="bar-extra">193 units</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Peterbilt</div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:16%">$21,069</div></div>
+          <div class="bar-extra">52 units</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">TOP 10 PRODUCTS BY NET SALES</h3>
+        <table class="data-table" style="font-size: 11px;">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Brand</th>
+              <th class="right">Units</th>
+              <th class="right">Net Sales</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono" style="font-size: 10px;">5418314 MODULE,OUTLET CATALYST</td><td>Cummins</td><td class="right mono">1</td><td class="right mono">$9,533</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">4352225 KIT,TURBOCHARGER</td><td>Cummins</td><td class="right mono">1</td><td class="right mono">$7,901</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">2513037C91 ENGINE HARNESS</td><td>Navistar</td><td class="right mono">5</td><td class="right mono">$6,742</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">4353300 MODULE,INLET CATALYST</td><td>Cummins</td><td class="right mono">1</td><td class="right mono">$5,839</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">5491785PXCUM PUMP,FUEL</td><td>Cummins</td><td class="right mono">1</td><td class="right mono">$5,443</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">ETN 322703 HOUSING-RR RNO.70</td><td>Eaton</td><td class="right mono">1</td><td class="right mono">$5,256</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">HOR995702 CLUTCH,GEAR BOX</td><td>Navistar</td><td class="right mono">1</td><td class="right mono">$4,989</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">J19-1016 STEERING COLUMN</td><td>Kenworth</td><td class="right mono">1</td><td class="right mono">$4,816</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">5633564 KIT,AIR COMPRESSOR</td><td>Cummins</td><td class="right mono">1</td><td class="right mono">$4,706</td></tr>
+            <tr><td class="mono" style="font-size: 10px;">2521972C1 VALVE,BRAKE CONTROL</td><td>Navistar</td><td class="right mono">3</td><td class="right mono">$4,270</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 0.75rem;"><strong style="color: var(--text);">2,373 products</strong> sold in April. Heavy bias toward <strong>Cummins + Navistar + Freightliner</strong> — these 3 brands are the recommended priority for the 50-product internal linking test group and subsequent pSEO rollout.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: INTERNAL LINKING ALGORITHM -->
+  <div class="section">
+    <div class="section-label">07</div>
+    <div class="section-title">Internal Linking Algorithm — pSEO Solution</div>
+
+    <div class="alert success">
+      <div class="alert-icon">✅</div>
+      <div class="alert-text"><strong>Algorithm defined and ready for test group implementation.</strong> 95.7% of products currently have fewer than 5 internal links. The algorithm brings every product page to a guaranteed minimum of 6 links using only data already in Shopify — no new data, no manual work. Casey approved: implement Rules 1, 2, 3, and 5 on a test group of 50–100 products first, verify page load speed, then monitor indexation response before full rollout.</div>
+    </div>
+
+    <div class="two-col" style="margin-top: 1.5rem;">
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">THE 5 RULES</h3>
+        <table class="data-table" style="font-size: 12px;">
+          <thead>
+            <tr>
+              <th>Rule</th>
+              <th>Link Type</th>
+              <th>Data Source</th>
+              <th>Phase</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-green">
+              <td><strong>Rule 1</strong></td>
+              <td>Parent Collection (make + part type)</td>
+              <td>Shopify collections[]</td>
+              <td>Phase 1</td>
+              <td><span class="badge badge-green">TEST GROUP ✓</span></td>
+            </tr>
+            <tr class="highlight-green">
+              <td><strong>Rule 2</strong></td>
+              <td>All-Makes Collection (same part type)</td>
+              <td>Shopify collections[] handle filter</td>
+              <td>Phase 1</td>
+              <td><span class="badge badge-green">TEST GROUP ✓</span></td>
+            </tr>
+            <tr class="highlight-green">
+              <td><strong>Rule 3</strong></td>
+              <td>Vendor Brand Page</td>
+              <td>Shopify vendor + mapping table CSV</td>
+              <td>Phase 1</td>
+              <td><span class="badge badge-green">TEST GROUP ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Rule 4</strong></td>
+              <td>Cross-Reference Products (OEM equivalents)</td>
+              <td>BigQuery cross_references[]</td>
+              <td>Phase 2</td>
+              <td><span class="badge badge-orange">AWAITING BIGQUERY</span></td>
+            </tr>
+            <tr class="highlight-green">
+              <td><strong>Rule 5</strong></td>
+              <td>Related Products (same vendor + type)</td>
+              <td>Shopify vendor + collections</td>
+              <td>Phase 1</td>
+              <td><span class="badge badge-green">TEST GROUP ✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="insight-box info" style="margin-top: 1rem;">
+          <div class="insight-label">📋 Vendor Mapping Table (Rule 3)</div>
+          <p>170 vendors identified from April sales data. Top vendors by revenue — <strong>Navistar ($127K), Cummins ($75K), Freightliner ($63K), Paccar ($48K), Kenworth ($40K)</strong> — are the priority for the mapping table. CSV being prepared for Luis.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 10px; color: var(--text-muted); margin-bottom: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; text-transform: uppercase;">TEST GROUP SELECTION (50 Products)</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">Products selected based on: top revenue brands (Navistar + Cummins + Freightliner), currently ranked in GSC with impressions but low CTR — highest potential to show measurable lift quickly.</p>
+
+        <div class="insight-box opportunity">
+          <div class="insight-label">🎯 Why These 50 Products</div>
+          <p>The 6 part-number queries identified in Section 04 (ranking pos. 2–8 with 0.15–0.54% CTR) are the exact type of product that benefits most from internal linking. More links → stronger page signals → Google re-evaluates indexation → CTR improves. <strong>Expected outcome: indexation lift within 14–21 days of deployment.</strong></p>
+        </div>
+
+        <div class="insight-box info" style="margin-top: 1rem;">
+          <div class="insight-label">⚙️ Implementation Owner: Luis</div>
+          <p>Rules 1, 2, 3, and 5 implemented via <strong>Liquid template logic</strong> — no apps, code only (per site speed requirements). Rule 3 requires the vendor-to-page mapping table CSV. Rule 4 deferred to Phase 2 pending BigQuery cross-reference data from Muhammad.</p>
+        </div>
+
+        <div class="insight-box warning" style="margin-top: 1rem;">
+          <div class="insight-label">📊 Success Metrics (14-Day Post-Deploy)</div>
+          <p>Track in GSC "All Submitted Pages" filter: <strong>indexation rate change on test group</strong> · <strong>CTR lift on ranked pages</strong> · <strong>page load speed delta</strong> (Core Web Vitals). Baseline: current 363K non-indexed of 767K submitted.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: PRIORITIES + ACTION PLAN -->
+  <div class="section">
+    <div class="section-label">08</div>
+    <div class="section-title">30-Day Action Plan — May 2026</div>
+
+    <div class="action-grid">
+      <div class="action-card">
+        <div class="action-priority">🔴 P0 — Week 1–2</div>
+        <div class="action-title">Internal Linking Test Group (50 Products)</div>
+        <ul class="action-items">
+          <li>Luis implements Rules 1, 2, 3, 5 in Liquid (no apps)</li>
+          <li>Product selection: top Navistar + Cummins + Freightliner SKUs</li>
+          <li>María delivers Vendor Mapping Table CSV for Rule 3</li>
+          <li>Validate page load speed + Core Web Vitals before rollout</li>
+          <li>Monitor GSC "All Submitted Pages": indexation delta at day 14</li>
+        </ul>
+        <div class="action-upside">↑ Estimated impact: indexation lift + CTR improvement on 363K target pages</div>
+      </div>
+      <div class="action-card">
+        <div class="action-priority">🔴 P0 — Week 1</div>
+        <div class="action-title">Pause Demand Gen Campaign</div>
+        <ul class="action-items">
+          <li>Demand Gen: 1.19x ROAS → effectively losing money</li>
+          <li>Reallocate $2,592/mo to PMAX Truck OEM ($150+)</li>
+          <li>PMAX Truck OEM currently at 10.51x ROAS</li>
+          <li>Expected incremental revenue: +$27K/mo from reallocation</li>
+          <li>Review Instagram Paid ($540 revenue from 3,986 sessions)</li>
+        </ul>
+        <div class="action-upside">↑ Estimated impact: +$25–30K/mo from budget reallocation</div>
+      </div>
+      <div class="action-card">
+        <div class="action-priority">🔥 P0 — Week 1–2</div>
+        <div class="action-title">AEO/GEO — Get into AI Answers</div>
+        <ul class="action-items">
+          <li>ChatGPT already converts at 7.5x Google organic</li>
+          <li>0/15 AI prompts mention BuyParts</li>
+          <li>Create 5 entity-optimized pages targeting AI queries</li>
+          <li>Add FAQ schema to all PDPs (especially Navistar + Cummins)</li>
+          <li>Submit structured data for product + review schema</li>
+        </ul>
+        <div class="action-upside">↑ Estimated impact: $9K → $50K+/mo AI-referred revenue</div>
+      </div>
+      <div class="action-card">
+        <div class="action-priority">🟡 P1 — Week 2–3</div>
+        <div class="action-title">Fix Attribution: "Unknown" Channels</div>
+        <ul class="action-items">
+          <li>Google unknown (7.02% conv) = $84K revenue not attributed</li>
+          <li>Unattributed paid (8.06% conv) = $17K revenue mystery</li>
+          <li>Audit UTM parameters on all Google Ads campaigns</li>
+          <li>Verify Shopify Analytics pixel configuration</li>
+          <li>Estimated mis-attributed revenue: $100K+/month</li>
+        </ul>
+        <div class="action-upside">↑ Impact: Correct budget allocation decisions</div>
+      </div>
+      <div class="action-card">
+        <div class="action-priority">🟡 P1 — Week 2–4</div>
+        <div class="action-title">Scale AI Search Campaign</div>
+        <ul class="action-items">
+          <li>AI Search Campaign already at 9.61x ROAS</li>
+          <li>Double budget: $2,254 → $4,500/month</li>
+          <li>Add AI-specific ad copy variants</li>
+          <li>Target long-tail AI-style queries (how-to, which-brand, fitment)</li>
+          <li>Correlate with AEO organic strategy</li>
+        </ul>
+        <div class="action-upside">↑ Estimated impact: +$20K/mo at current ROAS</div>
+      </div>
+      <div class="action-card">
+        <div class="action-priority">🟡 P1 — Week 3–4</div>
+        <div class="action-title">Scale Email Channel</div>
+        <ul class="action-items">
+          <li>Email: 14.11% conversion rate (best of all channels)</li>
+          <li>Only 163 sessions, 23 orders in April</li>
+          <li>Launch weekly email to existing customers</li>
+          <li>Segment by brand purchased (Cummins, Navistar, Freightliner)</li>
+          <li>Cross-sell: buyers of Navistar engine parts → filters, gaskets</li>
+        </ul>
+        <div class="action-upside">↑ Estimated impact: +$15–25K/mo with 3x email volume</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Questions for Casey</h3>
+    <div style="font-size: 13px; color: var(--text-muted); line-height: 2.2;">
+      <p><strong style="color: var(--text);">1. Google Unknown Attribution:</strong> "Google (unknown)" drove $84K in revenue at 7.02% conversion. This is likely mis-tagged Shopping traffic or cross-device sessions. Do we have a UTM audit in progress?</p>
+      <p><strong style="color: var(--text);">2. Demand Gen Campaign:</strong> It ran at 1.19x ROAS in April. Do we want to pause immediately and redirect budget to PMAX Truck OEM ($150+) which ran at 10.51x?</p>
+      <p><strong style="color: var(--text);">3. Email Volume:</strong> Shopify Email converts at 14.11% — the best channel we have — but only 163 sessions. Why aren't we emailing more? What's the current cadence?</p>
+      <p><strong style="color: var(--text);">4. AI Search Campaign:</strong> Already active and at 9.61x ROAS. Was this set up intentionally? If so, let's double the budget. If not, let's make sure it's optimized.</p>
+      <p><strong style="color: var(--text);">5. CATCH ALL Bleeders:</strong> 16,403 clicks, 3.43x ROAS. Given the account averages 8x+ on PMAX campaigns, should we reduce this budget 50% and add negatives?</p>
+    </div>
+  </div>
+
+  <!-- SECTION 9: REVENUE OPPORTUNITY SUMMARY -->
+  <div class="section">
+    <div class="section-label">09</div>
+    <div class="section-title">Revenue Opportunity Summary</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Opportunity</th>
+          <th>Type</th>
+          <th class="right">Effort</th>
+          <th class="right">Timeline</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-green">
+          <td><strong>Internal linking algorithm — 50-product test group</strong></td>
+          <td><span class="badge badge-blue">SEO</span></td>
+          <td class="right">Medium</td>
+          <td class="right">Week 1–2</td>
+          <td>Luis + María</td>
+        </tr>
+        <tr class="highlight-green">
+          <td><strong>Pause Demand Gen → reallocate to PMAX OEM</strong></td>
+          <td><span class="badge badge-orange">Paid</span></td>
+          <td class="right">Low</td>
+          <td class="right">Week 1</td>
+          <td>Maria or Casey</td>
+        </tr>
+        <tr class="highlight-green">
+          <td><strong>AEO/GEO — AI entity optimization</strong></td>
+          <td><span class="badge badge-gold">AEO</span></td>
+          <td class="right">High</td>
+          <td class="right">Week 2–6</td>
+          <td>María</td>
+        </tr>
+        <tr>
+          <td><strong>Scale AI Search Campaign budget 2x</strong></td>
+          <td><span class="badge badge-orange">Paid</span></td>
+          <td class="right">Low</td>
+          <td class="right">Week 1</td>
+          <td>Maria or Casey</td>
+        </tr>
+        <tr>
+          <td><strong>Scale email (3x current volume)</strong></td>
+          <td><span class="badge badge-blue">Email</span></td>
+          <td class="right">Low</td>
+          <td class="right">Week 3–4</td>
+          <td>María</td>
+        </tr>
+        <tr>
+          <td><strong>Bing optimization (high AOV: $455–577)</strong></td>
+          <td><span class="badge badge-blue">SEO</span></td>
+          <td class="right">Low</td>
+          <td class="right">Week 3–4</td>
+          <td>María</td>
+        </tr>
+        <tr>
+          <td><strong>UTM/attribution audit → correct reporting</strong></td>
+          <td><span class="badge badge-red">Analytics</span></td>
+          <td class="right">Medium</td>
+          <td class="right">Week 2</td>
+          <td>Luis + María</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="kpi-grid" style="margin-top: 1.5rem;">
+      <div class="kpi-card positive">
+        <div class="kpi-label">April 2026 Baseline Revenue</div>
+        <div class="kpi-value green">$375.7K</div>
+        <div class="kpi-meta">Google organic (source of truth)</div>
+      </div>
+      <div class="kpi-card positive">
+        <div class="kpi-label">Conservative May Target</div>
+        <div class="kpi-value green">$430K+</div>
+        <div class="kpi-meta">Linking test group + Demand Gen reallocation</div>
+      </div>
+      <div class="kpi-card positive">
+        <div class="kpi-label">100-Day Plan Target (Day 100)</div>
+        <div class="kpi-value green">$530K</div>
+        <div class="kpi-meta">All channels combined SEO + AEO</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">AEO/GEO Potential (Q3)</div>
+        <div class="kpi-value orange">$600K+</div>
+        <div class="kpi-meta">If AI visibility matches 50% of prompts</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="report-footer">
+  <div>
+    <strong>BuyParts.Online Multichannel Report — April 2026</strong><br>
+    Prepared by María De la Cruz · Growth & SEO Manager · growth@buyparts.online
+  </div>
+  <div style="text-align: right;">
+    <div>May 5, 2026</div>
+    <div style="margin-top: 4px; color: rgba(138,155,176,0.6);">Sources: GSC · Google Ads · Shopify · Ubersuggest ·</div>
+  </div>
+</div>
+
+</body>
+</html>
